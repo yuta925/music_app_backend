@@ -1,0 +1,20 @@
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gosimple
+    - ineffassign
+    - typecheck
+    - gosec
+    - prealloc
+    - testpackage
+    - tparallel
+    - exportloopref
+    - thelper
+    - gocognit
+    - gofmt
+
+run:
+    go: "1.21"

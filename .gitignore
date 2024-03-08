@@ -1,0 +1,27 @@
+.DS_Store
+mysql/mysql-data
+.env
+.env.dev
+
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+!.env.test
+
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
+
+### Go Patch ###
+/vendor/
+/Godeps/
+
+# End of https://www.toptal.com/developers/gitignore/api/go
