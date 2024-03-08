@@ -3,6 +3,7 @@ module music-app
 go 1.21.0
 
 require (
+	github.com/oklog/ulid v1.3.1
 	gorm.io/driver/mysql v1.5.4
 	gorm.io/gorm v1.25.7
 )
