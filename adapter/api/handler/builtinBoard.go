@@ -24,7 +24,6 @@ func (h *BuiltinBoardHandler) Register(c echo.Context) error {
 	}
 
 	builtinBoard, err := h.BuiltinBoardUsecase.Register(interactor.BuiltinBoardRegister{
-		BuiltinBoardId: req.BuiltinBoardId,
 		ImageUrl: req.ImageUrl,
 		LocationId: req.LocationId,
 		Date:    req.Date,

@@ -22,7 +22,7 @@ func NewBuiltinBoardRepository(
 func (r *BuiltinBoardRepository) FindByID(BuiltinBoardId string) (model.BuiltinBoard, error) {
 	builtinboard := &model.BuiltinBoard{}
 	err := r.db.
-		Model(&model.User{}).
+		Model(&model.BuiltinBoard{}).
 		Where("builtinboard_id = ?", BuiltinBoardId).
 		First(builtinboard).
 		Error
