@@ -6,6 +6,7 @@ import (
 	"music-app/adapter/authentication"
 	"music-app/adapter/clock"
 	"music-app/adapter/database"
+	"music-app/adapter/database/initdb"
 	"music-app/adapter/database/repository"
 	"music-app/adapter/ulid"
 	"music-app/usecase/interactor"
@@ -13,7 +14,7 @@ import (
 )
 
 func main() {
-
+	
 	db, err := database.NewMySQLDB()
 	if err != nil {
 		fmt.Errorf("エラーが発生しました: %v", err)
@@ -35,6 +36,10 @@ func main() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
+	_, err = initdb.CreateArtists(db)
+	if err != nil {
+		fmt.Errorf("エラーが発生しました: %v", err)
+	}
 
 	userAuth := authentication.NewUserAuth()
 
@@ -46,8 +51,8 @@ func main() {
 		userUC,
 	)
 	if err := s.Start(":80"); err != nil {
-    fmt.Printf("エラーが発生しました: %v\n", err)
-    os.Exit(1)
-}
+		fmt.Printf("エラーが発生しました: %v\n", err)
+		os.Exit(1)
+	}
 
 }

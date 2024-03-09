@@ -50,14 +50,18 @@ func NewMySQLDB() (*gorm.DB, error) {
 }
 
 func Migrate(db *gorm.DB) error {
-	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
-		&model.User{},
-	); err != nil {
+	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.User{}); err != nil {
+		return err
+	}
+	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Artist{}); err != nil {
 		return err
 	}
 	return nil
 }
 
 func DropDB(db *gorm.DB) {
-	_ = db.Migrator().DropTable()
+	_ = db.Migrator().DropTable(
+		&model.User{},
+		&model.Artist{},
+	)
 }
