@@ -19,6 +19,7 @@ func NewServer(
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodPatch},
+		AllowCredentials: true,
 	}))
 
 	e.Use(middleware.Logger())
