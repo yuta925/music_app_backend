@@ -2,7 +2,9 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"music-app/adapter/api/schema"
+	"music-app/adapter/api/middleware"
 	"music-app/usecase/interactor"
 	"net/http"
 
@@ -42,4 +44,15 @@ func (h *UserHandler) Register(c echo.Context) error {
 		User:        user,
 	}
 	return c.JSON(http.StatusCreated, registerRes)
+}
+
+func (h *UserHandler) FindMe(c echo.Context) error {
+
+	ctx := c.Request().Context()
+	user, err := middleware.GetUserFromContext(ctx)
+	if err != nil {
+		fmt.Errorf("エラーが発生しました: %v", err)
+	}
+
+	return c.JSON(http.StatusOK, schema.ProfileResFromModel(user))
 }

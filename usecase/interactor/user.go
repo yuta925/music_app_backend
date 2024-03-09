@@ -8,9 +8,9 @@ import (
 )
 
 var (
-	ErrUserAlreadyExists                 = errors.New("user already exists")
-	ErrUserNotFound                      = errors.New("user not found")
-	ErrEmailAlreadyUsed                  = errors.New("email already used")
+	ErrUserAlreadyExists = errors.New("user already exists")
+	ErrUserNotFound      = errors.New("user not found")
+	ErrEmailAlreadyUsed  = errors.New("email already used")
 )
 
 type UserUseCase struct {
@@ -52,33 +52,31 @@ func (u *UserUseCase) Login(email, password string) (model.User, string, error) 
 	return user, token, nil
 }
 
-
 func (u *UserUseCase) Register(register UserRegister) (model.User, string, error) {
 
 	if _, err := u.userRepo.FindByEmail(register.Email); err == nil {
-		return model.User{},"", fmt.Errorf("Email is already existed")
+		return model.User{}, "", fmt.Errorf("Email is already existed")
 	} else if !errors.Is(err, ErrUserNotFound) {
-		return model.User{},"", err
+		return model.User{}, "", err
 	}
 
 	hashedPassword, err := u.userAuth.HashPassword(register.Password)
 	if err != nil {
-		return model.User{},"", err
+		return model.User{}, "", err
 	}
 
 	newUser := model.User{
-		UserID: u.ulid.GenerateID(),
-		UserIcon: register.UserIcon,
+		UserID:         u.ulid.GenerateID(),
+		Name:           register.UserName,
+		UserIcon:       register.UserIcon,
 		HashedPassword: hashedPassword,
-		Email:    register.Email,
+		Email:          register.Email,
 	}
 	token, err := u.userAuth.IssueUserToken(newUser, u.clock.Now())
 	if err != nil {
-		return model.User{},"", err
+		return model.User{}, "", err
 	}
 
 	ret, err := u.userRepo.FindByID(newUser.UserID)
 	return ret, token, err
 }
-
-
