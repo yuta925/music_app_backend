@@ -14,4 +14,5 @@ type BuiltinBoardRegister struct {
 
 type IBuiltinBoardUseCase interface {
 	Register(BuiltinBoardRegister) (model.BuiltinBoard, error)
+	Search(builtinBoardSearch BuiltinBoardSearch) ([]model.BuiltinBoard, error)
 }

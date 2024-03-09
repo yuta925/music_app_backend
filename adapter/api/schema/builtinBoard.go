@@ -16,3 +16,11 @@ type BuiltinBoardRegisterRes struct {
 	Location       LocationRes `json:"location"`
 	Artist         ArtistRes   `json:"artist"`
 }
+
+type BuiltinBoardSearchReq struct {
+	Date           *time.Time `json:"date"`
+	LocationId     string     `json:"locationid"`
+	ArtistId       string     `json:"artistid"`
+	Skip         int    `query:"skip"`
+	Limit        int    `query:"limit"`
+}

@@ -2,6 +2,7 @@ package router
 
 import (
 	"music-app/adapter/api/handler"
+	apiMiddleware "music-app/adapter/api/middleware"
 	"music-app/usecase/interactor"
 	"net/http"
 
@@ -17,8 +18,8 @@ func NewServer(
 	e := echo.New()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodPatch},
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodPatch},
 		AllowCredentials: true,
 	}))
 
@@ -33,12 +34,15 @@ func NewServer(
 	api := e.Group("/api")
 	api.POST("/auth/access-token", authHandler.Login)
 
-	user := api.Group("/users")
+	auth := api.Group("", apiMiddleware.NewAuthMiddleware(userUC).Authenticate(true))
+
+	user := auth.Group("/users")
 	user.POST("", userHandler.Register)
 	user.GET("/me", userHandler.FindMe)
 
-	builtinboard := api.Group("/builtinboards")
+	builtinboard := auth.Group("/builtinboards")
 	builtinboard.POST("", builtinBoardHandler.Register)
+	builtinboard.GET("", builtinBoardHandler.Search)
 
 	return e
 }

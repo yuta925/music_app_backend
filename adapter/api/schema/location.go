@@ -5,3 +5,4 @@ type LocationRes struct {
 	Name         string `json:"name"`
 }
 
+

@@ -80,3 +80,11 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 	ret, err := u.userRepo.FindByID(newUser.UserID)
 	return ret, token, err
 }
+
+func (u *UserUseCase) FindByID(userID string) (model.User, error) {
+	return u.userRepo.FindByID(userID)
+}
+
+func (u *UserUseCase) Authenticate(token string) (string, error) {
+	return u.userAuth.Authenticate(token)
+}

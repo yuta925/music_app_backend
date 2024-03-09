@@ -12,4 +12,6 @@ type UserRegister struct {
 type IUserUseCase interface {
 	Login(email, password string) (model.User, string, error)
 	Register(UserRegister) (model.User, string, error)
+	FindByID(userID string) (model.User, error)
+	Authenticate(token string) (string, error)
 }

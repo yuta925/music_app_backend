@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"music-app/adapter/api/schema"
 	"music-app/usecase/interactor"
 	"net/http"
@@ -24,10 +25,10 @@ func (h *BuiltinBoardHandler) Register(c echo.Context) error {
 	}
 
 	builtinBoard, err := h.BuiltinBoardUsecase.Register(interactor.BuiltinBoardRegister{
-		ImageUrl: req.ImageUrl,
+		ImageUrl:   req.ImageUrl,
 		LocationId: req.LocationId,
-		Date:    req.Date,
-		ArtistId: req.ArtistId,
+		Date:       req.Date,
+		ArtistId:   req.ArtistId,
 	})
 	if err != nil {
 		switch {
@@ -40,3 +41,25 @@ func (h *BuiltinBoardHandler) Register(c echo.Context) error {
 	return c.JSON(http.StatusCreated, builtinBoard)
 }
 
+func (h *BuiltinBoardHandler) Search(c echo.Context) error {
+
+	var req schema.BuiltinBoardSearchReq
+	if err := c.Bind(&req); err != nil {
+		fmt.Errorf("Failed to bind request")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	res, err := h.BuiltinBoardUsecase.Search(interactor.BuiltinBoardSearch{
+		ArtistId:   req.ArtistId,
+		LocationId: req.LocationId,
+		Date:       *req.Date,
+		Skip:       req.Skip,
+		Limit:      req.Limit,
+	})
+	if err != nil {
+		fmt.Errorf("Failed to search company")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, res)
+}
