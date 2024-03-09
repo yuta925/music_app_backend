@@ -11,6 +11,7 @@ import (
 
 func NewServer(
 	userUC interactor.IUserUseCase,
+	builtinBoardUC interactor.IBuiltinBoardUseCase,
 
 ) *echo.Echo {
 	e := echo.New()
@@ -26,12 +27,16 @@ func NewServer(
 
 	authHandler := handler.NewAuthHandler(userUC)
 	userHandler := handler.NewUserHandler(userUC)
+	builtinBoardHandler := handler.NewBuiltinBoardHandler(builtinBoardUC)
 
 	api := e.Group("/api")
 	api.POST("/auth/access-token", authHandler.Login)
 
 	user := api.Group("/users")
 	user.POST("", userHandler.Register)
+
+	builtinboard := api.Group("/builtinboards")
+	builtinboard.POST("", builtinBoardHandler.Register)
 
 	return e
 }

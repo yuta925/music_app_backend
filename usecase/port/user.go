@@ -9,7 +9,6 @@ import (
 
 type UserRepository interface {
 	FindByEmail(email string) (model.User, error)
-	Create(user model.User) error
 	FindByID(UserId string) (model.User, error)
 }
 type UserAuth interface {
