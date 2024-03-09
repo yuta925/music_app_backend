@@ -28,7 +28,7 @@ func NewBuiltinBoardUseCase(
 	}
 }
 
-func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) (model.BuiltinBoard, error) {
+func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) (model.BuiltinBoard) {
 
 	newBuiltinBoard := model.BuiltinBoard{
 		BuiltinBoardId: u.ulid.GenerateID(),
@@ -38,8 +38,8 @@ func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) (model.Bui
 		ArtistId:       register.ArtistId,
 	}
 
-	ret, err := u.builtinBoardRepo.FindByID(newBuiltinBoard.BuiltinBoardId)
-	return ret, err
+
+	return newBuiltinBoard
 }
 
 func (u *BuiltinBoardUseCase) Search(builtinBoardSearch BuiltinBoardSearch) ([]model.BuiltinBoard, error) {

@@ -4,9 +4,9 @@ import "music-app/adapter/database/model"
 
 type UserRegisterReq struct {
 	Email    string `json:"email"`
+	UserIcon string `json:"icon"`
 	Name     string `json:"name"`
 	Password string `json:"password"`
-	UserIcon string `json:"userIcon"`
 }
 
 type RegisterRes struct {

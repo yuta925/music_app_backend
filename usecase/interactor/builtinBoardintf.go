@@ -8,11 +8,11 @@ import (
 type BuiltinBoardRegister struct {
 	ImageUrl       string
 	Date           *time.Time
-	LocationId     string
-	ArtistId       string
+	LocationId     int
+	ArtistId       int
 }
 
 type IBuiltinBoardUseCase interface {
-	Register(BuiltinBoardRegister) (model.BuiltinBoard, error)
+	Register(BuiltinBoardRegister) (model.BuiltinBoard)
 	Search(builtinBoardSearch BuiltinBoardSearch) ([]model.BuiltinBoard, error)
 }

@@ -2,7 +2,6 @@ package router
 
 import (
 	"music-app/adapter/api/handler"
-	apiMiddleware "music-app/adapter/api/middleware"
 	"music-app/usecase/interactor"
 	"net/http"
 
@@ -34,13 +33,13 @@ func NewServer(
 	api := e.Group("/api")
 	api.POST("/auth/access-token", authHandler.Login)
 
-	auth := api.Group("", apiMiddleware.NewAuthMiddleware(userUC).Authenticate(true))
+	// auth := api.Group("", apiMiddleware.NewAuthMiddleware(userUC).Authenticate(true))
 
-	user := auth.Group("/users")
+	user := api.Group("/users")
 	user.POST("", userHandler.Register)
 	user.GET("/me", userHandler.FindMe)
 
-	builtinboard := auth.Group("/builtinboards")
+	builtinboard := api.Group("/bulletin-board")
 	builtinboard.POST("", builtinBoardHandler.Register)
 	builtinboard.GET("", builtinBoardHandler.Search)
 

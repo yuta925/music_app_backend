@@ -2,6 +2,7 @@ package repository
 
 import (
 	"errors"
+	"fmt"
 	"music-app/adapter/database/model"
 	"music-app/usecase/interactor"
 	"music-app/usecase/port"
@@ -47,5 +48,6 @@ func (r *UserRepository) FindByID(UserId string) (model.User, error) {
 	if err != nil {
 		return model.User{}, err
 	}
+	fmt.Println(*user)
 	return *user, nil
 }

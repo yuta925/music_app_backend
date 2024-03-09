@@ -2,7 +2,6 @@ package interactor
 
 import (
 	"errors"
-	"fmt"
 	"music-app/adapter/database/model"
 	"music-app/usecase/port"
 )
@@ -54,11 +53,11 @@ func (u *UserUseCase) Login(email, password string) (model.User, string, error) 
 
 func (u *UserUseCase) Register(register UserRegister) (model.User, string, error) {
 
-	if _, err := u.userRepo.FindByEmail(register.Email); err == nil {
-		return model.User{}, "", fmt.Errorf("Email is already existed")
-	} else if !errors.Is(err, ErrUserNotFound) {
-		return model.User{}, "", err
-	}
+	// if _, err := u.userRepo.FindByEmail(register.Email); err == nil {
+	// 	return model.User{}, "", fmt.Errorf("Email is already existed")
+	// } else if !errors.Is(err, ErrUserNotFound) {
+	// 	return model.User{}, "", err
+	// }
 
 	hashedPassword, err := u.userAuth.HashPassword(register.Password)
 	if err != nil {
@@ -77,8 +76,8 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 		return model.User{}, "", err
 	}
 
-	ret, err := u.userRepo.FindByID(newUser.UserID)
-	return ret, token, err
+
+	return newUser, token, err
 }
 
 func (u *UserUseCase) FindByID(userID string) (model.User, error) {

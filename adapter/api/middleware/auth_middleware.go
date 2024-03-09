@@ -21,8 +21,6 @@ func NewAuthMiddleware(userUC interactor.IUserUseCase) *AuthMiddleware {
 	return &AuthMiddleware{userUC}
 }
 
-// Authenticate
-// tokenを取得して、認証するmiddlewareを返す関数. isRequireActivatedがtrueの場合、仮登録ユーザーは認証できない
 func (m *AuthMiddleware) Authenticate(isRequireActivated bool) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
