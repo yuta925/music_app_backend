@@ -13,20 +13,20 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-  migration:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    tty: true
-    env_file: .env.dev
-    depends_on:
-      mysql:
-        condition: service_healthy
+  # migration:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   tty: true
+  #   env_file: .env.dev
+  #   depends_on:
+  #     mysql:
+        # condition: service_healthy
   mysql:
     image: mysql:8.0.28
     platform: linux/x86_64
     ports:
-      - 3306:3306
+      - 4000:3306
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=music
