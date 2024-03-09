@@ -34,6 +34,7 @@ func NewServer(
 
 	user := api.Group("/users")
 	user.POST("", userHandler.Register)
+	user.GET("/me", userHandler.FindMe)
 
 	builtinboard := api.Group("/builtinboards")
 	builtinboard.POST("", builtinBoardHandler.Register)
