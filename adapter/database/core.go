@@ -5,9 +5,11 @@ import (
 	"math"
 	"time"
 
+	"music-app/adapter/database/model"
+	"music-app/config"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"music-app/config"
 )
 
 func NewMySQLDB() (*gorm.DB, error) {
@@ -48,7 +50,9 @@ func NewMySQLDB() (*gorm.DB, error) {
 }
 
 func Migrate(db *gorm.DB) error {
-	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(); err != nil {
+	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
+		&model.User{},
+	); err != nil {
 		return err
 	}
 	return nil
