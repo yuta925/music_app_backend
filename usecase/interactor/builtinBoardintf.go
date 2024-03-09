@@ -6,7 +6,6 @@ import (
 )
 
 type BuiltinBoardRegister struct {
-	BuiltinBoardId string
 	ImageUrl       string
 	Date           *time.Time
 	LocationId     string

@@ -19,6 +19,7 @@ func NewServer(
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodPatch},
+		AllowCredentials: true,
 	}))
 
 	e.Use(middleware.Logger())
@@ -34,6 +35,7 @@ func NewServer(
 
 	user := api.Group("/users")
 	user.POST("", userHandler.Register)
+	user.GET("/me", userHandler.FindMe)
 
 	builtinboard := api.Group("/builtinboards")
 	builtinboard.POST("", builtinBoardHandler.Register)
