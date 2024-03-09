@@ -6,7 +6,6 @@ import (
 	"music-app/adapter/authentication"
 	"music-app/adapter/clock"
 	"music-app/adapter/database"
-	"music-app/adapter/database/initdb"
 	"music-app/adapter/database/repository"
 	"music-app/adapter/ulid"
 	"music-app/usecase/interactor"
@@ -33,17 +32,6 @@ func main() {
 	}()
 
 	err = database.Migrate(db)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-	_, err = initdb.CreateArtists(db)
-	if err != nil {
-		fmt.Errorf("エラーが発生しました: %v", err)
-	}
-	_, err = initdb.CreateLocations(db)
-	if err != nil {
-		fmt.Errorf("エラーが発生しました: %v", err)
-	}
 
 	userAuth := authentication.NewUserAuth()
 

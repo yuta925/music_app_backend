@@ -8,6 +8,4 @@ type BuiltinBoard struct {
 	Date           *time.Time
 	LocationId     int
 	ArtistId       int
-	Location       Location `gorm:"foreignKey:LocationId"`
-	Artist         Artist   `gorm:"foreignKey:ArtistId"`
 }
