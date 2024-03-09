@@ -47,5 +47,5 @@ func (r *UserRepository) FindByID(UserId string) (model.User, error) {
 	if err != nil {
 		return model.User{}, err
 	}
-	return model.User{}, nil
+	return *user, nil
 }
