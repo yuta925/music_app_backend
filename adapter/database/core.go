@@ -56,6 +56,9 @@ func Migrate(db *gorm.DB) error {
 	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Artist{}); err != nil {
 		return err
 	}
+	if err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Location{}); err != nil {
+		return err
+	}
 	return nil
 }
 

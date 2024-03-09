@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	
+
 	db, err := database.NewMySQLDB()
 	if err != nil {
 		fmt.Errorf("エラーが発生しました: %v", err)
@@ -37,6 +37,10 @@ func main() {
 		fmt.Println("error:", err)
 	}
 	_, err = initdb.CreateArtists(db)
+	if err != nil {
+		fmt.Errorf("エラーが発生しました: %v", err)
+	}
+	_, err = initdb.CreateLocations(db)
 	if err != nil {
 		fmt.Errorf("エラーが発生しました: %v", err)
 	}

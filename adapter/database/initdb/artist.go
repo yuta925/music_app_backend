@@ -11,7 +11,7 @@ func CreateArtists(db *gorm.DB) ([]model.Artist, error) {
 	u := []model.Artist{
 		{ArtistId: "1", Name: "The beatls"},
 		{ArtistId: "2", Name: "SuperBeaver"},
-		{ArtistId: "", Name: "ive"},
+		{ArtistId: "3", Name: "ive"},
 		{ArtistId: "4", Name: "BTS"},
 		{ArtistId: "5", Name: "嵐"},
 		{ArtistId: "6", Name: "伊藤史人"},
