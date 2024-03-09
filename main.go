@@ -49,10 +49,16 @@ func main() {
 
 	ulidDriver := ulid.NewULID()
 	clockDriver := clock.New()
+
 	userRepo := repository.NewUserRepository(db, ulidDriver)
+	builtinBoardRepo := repository.NewBuiltinBoardRepository(db, ulidDriver)
+
 	userUC := interactor.NewUserUseCase(clockDriver, ulidDriver, userAuth, userRepo)
+	builtinBoardUC := interactor.NewBuiltinBoardUseCase(ulidDriver, builtinBoardRepo)
+
 	s := router.NewServer(
 		userUC,
+		builtinBoardUC,
 	)
 	if err := s.Start(":80"); err != nil {
 		fmt.Printf("エラーが発生しました: %v\n", err)

@@ -21,18 +21,6 @@ func NewUserRepository(
 	return &UserRepository{db: db, ulid: ulid}
 }
 
-func (r *UserRepository) Create(user model.User) error {
-	m := &model.User{
-		UserID:         user.UserID,
-		Email:          user.Email,
-		HashedPassword: user.HashedPassword,
-		UserIcon:       user.UserIcon,
-	}
-	if err := r.db.Create(m).Error; err != nil {
-		return err
-	}
-	return nil
-}
 
 func (r *UserRepository) FindByEmail(email string) (model.User, error) {
 	ret := &model.User{}
