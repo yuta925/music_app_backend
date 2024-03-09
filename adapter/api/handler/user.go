@@ -13,7 +13,7 @@ type UserHandler struct {
 	UserUsecase interactor.IUserUseCase
 }
 
-func NewWorkerUserHandler(userUsecase interactor.IUserUseCase) *UserHandler {
+func NewUserHandler(userUsecase interactor.IUserUseCase) *UserHandler {
 	return &UserHandler{UserUsecase: userUsecase}
 }
 

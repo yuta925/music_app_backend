@@ -25,9 +25,13 @@ func NewServer(
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	authHandler := handler.NewAuthHandler(userUC)
+	userHandler := handler.NewUserHandler(userUC)
 
 	api := e.Group("/api")
 	api.POST("/auth/access-token", authHandler.Login)
+
+	user := api.Group("/users")
+	user.POST("", userHandler.Register)
 
 	return e
 }
