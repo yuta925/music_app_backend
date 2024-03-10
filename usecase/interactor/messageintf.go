@@ -6,7 +6,6 @@ import (
 )
 
 type MessageRegister struct {
-	Text           string
 	VoiceUrl       string
 	UserId         string
 	Time           time.Time

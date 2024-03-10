@@ -39,3 +39,10 @@ func (r *MessageRepository) Search(query port.MessageSearchQuery) ([]model.Messa
 
 	return messages, nil
 }
+
+func (r *MessageRepository) Create(messageCreate model.Message) error {
+	if err := r.db.Create(&messageCreate).Error; err != nil {
+		return err
+	}
+	return nil
+}

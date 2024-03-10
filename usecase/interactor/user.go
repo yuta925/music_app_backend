@@ -2,6 +2,7 @@ package interactor
 
 import (
 	"errors"
+	"log"
 	"music-app/adapter/database/model"
 	"music-app/usecase/port"
 )
@@ -69,8 +70,11 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 	if err != nil {
 		return model.User{}, "", err
 	}
-	
 
+	e := u.userRepo.Create(newUser)
+	if e != nil {
+		log.Println("Error:", err)
+	}
 
 	return newUser, token, err
 }

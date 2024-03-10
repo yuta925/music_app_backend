@@ -51,3 +51,10 @@ func (r *UserRepository) FindByID(UserId string) (model.User, error) {
 	fmt.Println(*user)
 	return *user, nil
 }
+
+func (r *UserRepository) Create(userCreate model.User) error {
+	if err := r.db.Create(&userCreate).Error; err != nil {
+		return err
+	}
+	return nil
+}

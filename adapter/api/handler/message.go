@@ -24,7 +24,6 @@ func (h *MessageHandler) Register(c echo.Context) error {
 	}
 
 	message := h.MessageUsecase.Register(interactor.MessageRegister{
-		Text:           req.Text,
 		VoiceUrl:       req.UserId,
 		UserId:         req.UserId,
 		Time:           req.Time,
