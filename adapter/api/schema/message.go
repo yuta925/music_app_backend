@@ -9,3 +9,9 @@ type MessageRegisterReq struct {
 	Time           time.Time `json:"time"`
 	BuiltinBoardId string    `json:"builtin_board_id"`
 }
+
+type MessageSearchrReq struct {
+	BuiltinBoardId string `json:"builtin_board_id"`
+	Skip           int    `query:"skip"`
+	Limit          int    `query:"limit"`
+}

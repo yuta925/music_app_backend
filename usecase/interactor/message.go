@@ -10,6 +10,12 @@ type MessageUseCase struct {
 	MessageRepo port.MessageRepository
 }
 
+type MessageSearch struct {
+	BuiltinBoardId string
+	Skip       int
+	Limit      int
+}
+
 func NewMessageUseCase(
 	ulid port.ULID,
 	messageRepo port.MessageRepository,
@@ -32,4 +38,12 @@ func (u *MessageUseCase) Register(register MessageRegister) model.Message {
 	}
 
 	return newMessage
+}
+
+func (u *MessageUseCase) Search(messageSearch MessageSearch) ([]model.Message, error) {
+	return u.MessageRepo.Search(port.MessageSearchQuery{
+		BuiltinBoardId:   messageSearch.BuiltinBoardId,
+		Skip:       messageSearch.Skip,
+		Limit:      messageSearch.Limit,
+	})
 }

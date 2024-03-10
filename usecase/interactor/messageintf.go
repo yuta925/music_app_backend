@@ -13,6 +13,8 @@ type MessageRegister struct {
 	BuiltinBoardId string
 }
 
+
 type IMessageUseCase interface {
 	Register(MessageRegister) model.Message
+	Search(messageSearch MessageSearch) ([]model.Message, error)
 }

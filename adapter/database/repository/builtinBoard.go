@@ -33,26 +33,21 @@ func (r *BuiltinBoardRepository) FindByID(BuiltinBoardId string) (model.BuiltinB
 }
 
 func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]model.BuiltinBoard, error) {
-	sql := r.db.
-		Model(&model.BuiltinBoard{}).
-		Joins("JOIN artists ON builtin_boards.artist_id = artists.artist_id").
-		Joins("JOIN locations ON builtin_boards.location_id = locations.location_id")
+	sql := r.db.Model(&model.BuiltinBoard{})
 
 	if query.ArtistId != "" {
-		sql = sql.Where("builtin_boards.artist_id = ?", query.ArtistId)
+		sql = sql.Where("artist_id = ?", query.ArtistId)
 	}
 	if query.LocationId != "" {
-		sql = sql.Where("builtin_boards.location_id = ?", query.LocationId)
+		sql = sql.Where("location_id = ?", query.LocationId)
 	}
 	if query.Date != nil {
-		sql = sql.Where("builtin_boards.date = ?", query.Date)
+		sql = sql.Where("date = ?", query.Date)
 	}
 
 
 	var builtinBoards []model.BuiltinBoard
 	if err := sql.
-		Preload("location").
-		Preload("artist").
 		Offset(query.Skip).
 		Limit(query.Limit).
 		Find(&builtinBoards).

@@ -46,6 +46,7 @@ func NewServer(
 
 	message := api.Group("/message")
 	message.POST("", messageHandler.Register)
+	message.GET("", messageHandler.Search)
 
 	return e
 }
