@@ -50,7 +50,7 @@ func (u *BuiltinBoardUseCase) Search(builtinBoardSearch BuiltinBoardSearch) ([]m
 	return u.builtinBoardRepo.Search(port.BuiltinBoardSearchQuery{
 		ArtistId:   builtinBoardSearch.ArtistId,
 		LocationId: builtinBoardSearch.LocationId,
-		Date:       &builtinBoardSearch.Date,
+		Date:       builtinBoardSearch.Date,
 		Skip:       builtinBoardSearch.Skip,
 		Limit:      builtinBoardSearch.Limit,
 	})

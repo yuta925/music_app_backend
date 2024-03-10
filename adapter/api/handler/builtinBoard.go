@@ -43,9 +43,10 @@ func (h *BuiltinBoardHandler) Search(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	fmt.Println(req)
-
-	t, _ := time.Parse(time.RFC3339Nano, req.Date)
+	// req.Dateをtimeに直す
+	t, _ := time.Parse(time.RFC3339Nano, req.LiveDate)
 	dateOnly := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+
 	res, err := h.BuiltinBoardUsecase.Search(interactor.BuiltinBoardSearch{
 		ArtistId:   req.ArtistId,
 		LocationId: req.LocationId,

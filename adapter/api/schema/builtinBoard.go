@@ -18,9 +18,9 @@ type BuiltinBoardRegisterRes struct {
 }
 
 type BuiltinBoardSearchReq struct {
-	Date       string `json:"live_date"`
-	LocationId string    `json:"locationid"`
-	ArtistId   string    `json:"artistid"`
-	Skip       int       `query:"skip"`
-	Limit      int       `query:"limit"`
+	LiveDate   string `query:"live_date"`
+	LocationId string `query:"locationid"`
+	ArtistId   string `query:"artistid"`
+	Skip       int    `query:"skip"`
+	Limit      int    `query:"limit"`
 }

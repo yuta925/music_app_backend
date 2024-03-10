@@ -1,8 +1,10 @@
 package repository
 
 import (
+	"fmt"
 	"music-app/adapter/database/model"
 	"music-app/usecase/port"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -40,6 +42,7 @@ func (r *BuiltinBoardRepository) FindByID(BuiltinBoardId string) (model.BuiltinB
 }
 
 func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]model.BuiltinBoard, error) {
+	fmt.Println(query)
 	sql := r.db.Model(&model.BuiltinBoard{})
 
 	if query.ArtistId != "" {
@@ -48,9 +51,11 @@ func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]m
 	if query.LocationId != "" {
 		sql = sql.Where("location_id = ?", query.LocationId)
 	}
-	if query.Date != nil {
-		sql = sql.Where("date = ?", query.Date)
+	dateEnd := time.Date(query.Date.Year(), query.Date.Month(), query.Date.Day(), 23, 59, 59, 0, query.Date.Location())
+	if query.Date != (time.Time{}) {
+		sql = sql.Where("date BETWEEN ? AND ?", query.Date, dateEnd)
 	}
+	fmt.Println(sql)
 
 	var builtinBoards []model.BuiltinBoard
 	if err := sql.
@@ -60,6 +65,6 @@ func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]m
 		Error; err != nil {
 		return nil, err
 	}
-
+	fmt.Println(builtinBoards)
 	return builtinBoards, nil
 }

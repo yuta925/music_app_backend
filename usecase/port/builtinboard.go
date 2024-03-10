@@ -14,7 +14,7 @@ type BuiltinBoardRepository interface {
 type BuiltinBoardSearchQuery struct {
 	ArtistId   string
 	LocationId string
-	Date       *time.Time
+	Date       time.Time
 	Skip       int
 	Limit      int
 }
