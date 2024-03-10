@@ -18,7 +18,7 @@ type BuiltinBoardRegisterRes struct {
 }
 
 type BuiltinBoardSearchReq struct {
-	Date       time.Time `json:"live_date"`
+	Date       string `json:"live_date"`
 	LocationId string    `json:"locationid"`
 	ArtistId   string    `json:"artistid"`
 	Skip       int       `query:"skip"`

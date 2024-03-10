@@ -44,10 +44,12 @@ func (h *BuiltinBoardHandler) Search(c echo.Context) error {
 	}
 	fmt.Println(req)
 
+	t, _ := time.Parse(time.RFC3339Nano, req.Date)
+	dateOnly := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 	res, err := h.BuiltinBoardUsecase.Search(interactor.BuiltinBoardSearch{
 		ArtistId:   req.ArtistId,
 		LocationId: req.LocationId,
-		Date:       req.Date,
+		Date:       dateOnly,
 		Skip:       req.Skip,
 		Limit:      req.Limit,
 	})
