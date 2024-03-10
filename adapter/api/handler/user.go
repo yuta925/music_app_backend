@@ -49,7 +49,9 @@ func (h *UserHandler) Register(c echo.Context) error {
 func (h *UserHandler) FindMe(c echo.Context) error {
 
 	ctx := c.Request().Context()
+	fmt.Println(ctx)
 	user, err := middleware.GetUserFromContext(ctx)
+	fmt.Println(user)
 	if err != nil {
 		fmt.Errorf("エラーが発生しました: %v", err)
 	}

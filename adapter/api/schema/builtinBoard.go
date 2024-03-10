@@ -5,8 +5,8 @@ import "time"
 type BuiltinBoardRegisterReq struct {
 	ImageUrl   string `json:"live_image"`
 	Date       string `json:"live_date"`
-	LocationId int    `json:"live_venue_id"`
-	ArtistId   int    `json:"artist_id"`
+	LocationId string    `json:"live_venue_id"`
+	ArtistId   string    `json:"artist_id"`
 }
 
 type BuiltinBoardRegisterRes struct {
