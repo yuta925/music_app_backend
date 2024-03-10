@@ -1,0 +1,18 @@
+package interactor
+
+import (
+	"music-app/adapter/database/model"
+	"time"
+)
+
+type MessageRegister struct {
+	Text           string
+	VoiceUrl       string
+	UserId         string
+	Time           time.Time
+	BuiltinBoardId string
+}
+
+type IMessageUseCase interface {
+	Register(MessageRegister) model.Message
+}

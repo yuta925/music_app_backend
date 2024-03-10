@@ -40,13 +40,17 @@ func main() {
 
 	userRepo := repository.NewUserRepository(db, ulidDriver)
 	builtinBoardRepo := repository.NewBuiltinBoardRepository(db, ulidDriver)
+	messageRepo := repository.NewMessageRepository(db, ulidDriver)
 
 	userUC := interactor.NewUserUseCase(clockDriver, ulidDriver, userAuth, userRepo)
 	builtinBoardUC := interactor.NewBuiltinBoardUseCase(ulidDriver, builtinBoardRepo)
+	messageUC := interactor.NewMessageUseCase(ulidDriver, messageRepo)
+
 
 	s := router.NewServer(
 		userUC,
 		builtinBoardUC,
+		messageUC,
 	)
 	if err := s.Start(":80"); err != nil {
 		fmt.Printf("エラーが発生しました: %v\n", err)
