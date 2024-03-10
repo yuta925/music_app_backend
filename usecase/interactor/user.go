@@ -53,12 +53,6 @@ func (u *UserUseCase) Login(email, password string) (model.User, string, error) 
 
 func (u *UserUseCase) Register(register UserRegister) (model.User, string, error) {
 
-	// if _, err := u.userRepo.FindByEmail(register.Email); err == nil {
-	// 	return model.User{}, "", fmt.Errorf("Email is already existed")
-	// } else if !errors.Is(err, ErrUserNotFound) {
-	// 	return model.User{}, "", err
-	// }
-
 	hashedPassword, err := u.userAuth.HashPassword(register.Password)
 	if err != nil {
 		return model.User{}, "", err
@@ -75,6 +69,7 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 	if err != nil {
 		return model.User{}, "", err
 	}
+	
 
 
 	return newUser, token, err
