@@ -1,6 +1,7 @@
 package interactor
 
 import (
+	"log"
 	"music-app/adapter/database/model"
 	"music-app/usecase/port"
 	"time"
@@ -28,7 +29,7 @@ func NewBuiltinBoardUseCase(
 	}
 }
 
-func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) (model.BuiltinBoard) {
+func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) model.BuiltinBoard {
 
 	newBuiltinBoard := model.BuiltinBoard{
 		BuiltinBoardId: u.ulid.GenerateID(),
@@ -37,7 +38,10 @@ func (u *BuiltinBoardUseCase) Register(register BuiltinBoardRegister) (model.Bui
 		LocationId:     register.LocationId,
 		ArtistId:       register.ArtistId,
 	}
-
+	err := u.builtinBoardRepo.Create(newBuiltinBoard)
+	if err != nil {
+		log.Println("Error:", err)
+	}
 
 	return newBuiltinBoard
 }

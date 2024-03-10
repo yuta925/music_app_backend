@@ -19,6 +19,13 @@ func NewBuiltinBoardRepository(
 	return &BuiltinBoardRepository{db: db, ulid: ulid}
 }
 
+func (r *BuiltinBoardRepository) Create(buitinBoardCreate model.BuiltinBoard) error {
+	if err := r.db.Create(&buitinBoardCreate).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *BuiltinBoardRepository) FindByID(BuiltinBoardId string) (model.BuiltinBoard, error) {
 	builtinboard := &model.BuiltinBoard{}
 	err := r.db.
@@ -45,7 +52,6 @@ func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]m
 		sql = sql.Where("date = ?", query.Date)
 	}
 
-
 	var builtinBoards []model.BuiltinBoard
 	if err := sql.
 		Offset(query.Skip).
@@ -57,5 +63,3 @@ func (r *BuiltinBoardRepository) Search(query port.BuiltinBoardSearchQuery) ([]m
 
 	return builtinBoards, nil
 }
-
-
