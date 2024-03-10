@@ -5,7 +5,7 @@ import "time"
 type BuiltinBoard struct {
 	BuiltinBoardId string `gorm:"primaryKey;size:26"`
 	ImageUrl       string `gorm:"size:26; not null"`
-	Date           *time.Time
+	Date           time.Time
 	LocationId     int
 	ArtistId       int
 }

@@ -7,7 +7,7 @@ import (
 
 type BuiltinBoardRegister struct {
 	ImageUrl       string
-	Date           *time.Time
+	Date           time.Time
 	LocationId     int
 	ArtistId       int
 }

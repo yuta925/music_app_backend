@@ -5,6 +5,7 @@ import (
 	"music-app/adapter/api/schema"
 	"music-app/usecase/interactor"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo"
 )
@@ -22,11 +23,12 @@ func (h *BuiltinBoardHandler) Register(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
+	t, _ := time.Parse(time.RFC3339Nano, req.Date)
 
-	builtinBoard:= h.BuiltinBoardUsecase.Register(interactor.BuiltinBoardRegister{
+	builtinBoard := h.BuiltinBoardUsecase.Register(interactor.BuiltinBoardRegister{
 		ImageUrl:   req.ImageUrl,
 		LocationId: req.LocationId,
-		Date:       req.Date,
+		Date:       t,
 		ArtistId:   req.ArtistId,
 	})
 	return c.JSON(http.StatusCreated, builtinBoard)
@@ -39,11 +41,12 @@ func (h *BuiltinBoardHandler) Search(c echo.Context) error {
 		fmt.Errorf("Failed to bind request")
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
+	fmt.Println(req)
 
 	res, err := h.BuiltinBoardUsecase.Search(interactor.BuiltinBoardSearch{
 		ArtistId:   req.ArtistId,
 		LocationId: req.LocationId,
-		Date:       *req.Date,
+		Date:       req.Date,
 		Skip:       req.Skip,
 		Limit:      req.Limit,
 	})
