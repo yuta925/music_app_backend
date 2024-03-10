@@ -24,11 +24,12 @@ func (h *BuiltinBoardHandler) Register(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	t, _ := time.Parse(time.RFC3339Nano, req.Date)
+	dateOnly := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 
 	builtinBoard := h.BuiltinBoardUsecase.Register(interactor.BuiltinBoardRegister{
 		ImageUrl:   req.ImageUrl,
 		LocationId: req.LocationId,
-		Date:       t,
+		Date:       dateOnly,
 		ArtistId:   req.ArtistId,
 	})
 	return c.JSON(http.StatusCreated, builtinBoard)
