@@ -38,11 +38,11 @@ func (r *UserRepository) FindByEmail(email string) (model.User, error) {
 	return *ret, nil
 }
 
-func (r *UserRepository) FindByID(UserId string) (model.User, error) {
+func (r *UserRepository) FindByID(query port.UserSearchQuery) (model.User, error) {
 	user := &model.User{}
 	err := r.db.
 		Model(&model.User{}).
-		Where("user_id = ?", UserId).
+		Where("name = ?", query.UserId).
 		First(user).
 		Error
 	if err != nil {

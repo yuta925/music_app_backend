@@ -13,6 +13,9 @@ var (
 	ErrEmailAlreadyUsed  = errors.New("email already used")
 )
 
+type UserSearch struct {
+	UserId string
+}
 type UserUseCase struct {
 	clock    port.Clock
 	ulid     port.ULID
@@ -79,8 +82,10 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 	return newUser, token, err
 }
 
-func (u *UserUseCase) FindByID(userID string) (model.User, error) {
-	return u.userRepo.FindByID(userID)
+func (u *UserUseCase) FindByID(userSearch UserSearch) (model.User, error) {
+	return u.userRepo.FindByID(port.UserSearchQuery{
+		UserId:   userSearch.UserId,
+	})
 }
 
 func (u *UserUseCase) Authenticate(token string) (string, error) {

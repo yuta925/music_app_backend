@@ -35,11 +35,9 @@ func NewServer(
 	api := e.Group("/api")
 	api.POST("/auth/access-token", authHandler.Login)
 
-	// auth := api.Group("", apiMiddleware.NewAuthMiddleware(userUC).Authenticate(true))
-
 	user := api.Group("/users")
 	user.POST("", userHandler.Register)
-	user.GET("/me", userHandler.FindMe)
+	user.GET("/me", userHandler.FindById)
 
 	builtinboard := api.Group("/bulletin-board")
 	builtinboard.POST("", builtinBoardHandler.Register)

@@ -5,11 +5,9 @@ import (
 	"time"
 )
 
-
-
 type UserRepository interface {
 	FindByEmail(email string) (model.User, error)
-	FindByID(UserId string) (model.User, error)
+	FindByID(query UserSearchQuery) (model.User, error)
 	Create(userCreate model.User) error
 }
 type UserAuth interface {
@@ -19,4 +17,6 @@ type UserAuth interface {
 	IssueUserToken(user model.User, issuedAt time.Time) (string, error)
 }
 
-
+type UserSearchQuery struct {
+	UserId string
+}

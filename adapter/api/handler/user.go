@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"music-app/adapter/api/schema"
-	"music-app/adapter/api/middleware"
 	"music-app/usecase/interactor"
 	"net/http"
 
@@ -46,15 +45,18 @@ func (h *UserHandler) Register(c echo.Context) error {
 	return c.JSON(http.StatusCreated, registerRes)
 }
 
-func (h *UserHandler) FindMe(c echo.Context) error {
-
-	ctx := c.Request().Context()
-	fmt.Println(ctx)
-	user, err := middleware.GetUserFromContext(ctx)
-	fmt.Println(user)
+func (h *UserHandler) FindById(c echo.Context) error {
+	var req schema.ProfileReq
+	if err := c.Bind(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	res, err := h.UserUsecase.FindByID(interactor.UserSearch{
+		UserId: req.UserId,
+	})
 	if err != nil {
-		fmt.Errorf("エラーが発生しました: %v", err)
+		fmt.Errorf("Failed to search company")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	return c.JSON(http.StatusOK, schema.ProfileResFromModel(user))
+	return c.JSON(http.StatusOK, res)
 }

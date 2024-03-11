@@ -19,6 +19,10 @@ type ProfileRes struct {
 	UserIcon string `json:"userIcon"`
 }
 
+type ProfileReq struct {
+	UserId     string `query:"user_name"`
+}
+
 func ProfileResFromModel(User model.User) ProfileRes {
 	return ProfileRes{
 		Name:     User.Name,
