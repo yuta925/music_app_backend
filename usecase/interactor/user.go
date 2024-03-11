@@ -2,6 +2,7 @@ package interactor
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"music-app/adapter/database/model"
 	"music-app/usecase/port"
@@ -73,6 +74,7 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 	if err != nil {
 		return model.User{}, "", err
 	}
+	fmt.Println(newUser)
 
 	e := u.userRepo.Create(newUser)
 	if e != nil {
@@ -84,7 +86,7 @@ func (u *UserUseCase) Register(register UserRegister) (model.User, string, error
 
 func (u *UserUseCase) FindByID(userSearch UserSearch) (model.User, error) {
 	return u.userRepo.FindByID(port.UserSearchQuery{
-		UserId:   userSearch.UserId,
+		UserId: userSearch.UserId,
 	})
 }
 
